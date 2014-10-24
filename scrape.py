@@ -83,3 +83,5 @@ for sale in new_sales:
     "skins": scraped_data["skins"],
     "champs": scraped_data["champs"]
   })
+
+  #schedule sending script
