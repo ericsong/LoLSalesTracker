@@ -45,7 +45,7 @@ def scrapeSales(soup):
   return sale
 
 #grab page
-data = requests.get("http://na.leagueoflegends.com/en/news/store/sales?page=1").text
+data = requests.get("http://na.leagueoflegends.com/en/news/store/sales").text
 soup = BeautifulSoup(data)
 items = soup.find_all("div", "gs-container")
 scraped_sales = []

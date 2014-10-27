@@ -3,11 +3,12 @@ from pymongo import MongoClient
 import json
 import requests
 
-def insertItem(name, type):
-  item = items.find_one({'name': name}) 
+def insertItem(name, id, type):
+  item = items.find_one({'id': id}) 
   if item is None:
     items.insert({
       'name': name,
+      'id': id,
       'type': type
     })
 
@@ -23,6 +24,6 @@ for champ in champions:
   skins = champ_data['skins']
   for skin in skins:
     if skin['name'] == 'default':
-      insertItem(champ, 'champ')
+      insertItem(champ, skin['id'], 'champ')
     else: 
-      insertItem(skin['name'], 'skin')
+      insertItem(skin['name'], skin['id'], 'skin')
