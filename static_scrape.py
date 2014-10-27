@@ -7,7 +7,7 @@ def insertItem(name, id, type):
   item = items.find_one({'id': id}) 
   if item is None:
     items.insert({
-      'name': name,
+      'name': "".join(name.split()),
       'id': id,
       'type': type
     })
