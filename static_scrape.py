@@ -3,16 +3,13 @@ from pymongo import MongoClient
 import json
 import requests
 
-"""
-data = requests.get("http://gameinfo.na.leagueoflegends.com/en/game-info/champions/ahri").text
-soup = BeautifulSoup(data)
-container = soup.find("div", "gs-container default-3-col")
-skins = container.find_all("a", "skins")
-del skins[0]
-
-for skin in skins:
-  print skin.get('title')
-"""
+def insertItem(name, type):
+  item = items.find_one({'name': name}) 
+  if item is None:
+    items.insert({
+      'name': name,
+      'type': type
+    })
 
 client = MongoClient('localhost', 27017)
 db = client.grandpateemo
@@ -26,12 +23,6 @@ for champ in champions:
   skins = champ_data['skins']
   for skin in skins:
     if skin['name'] == 'default':
-      items.insert({
-        'name': champ,
-        'type': 'champ'
-      })
+      insertItem(champ, 'champ')
     else: 
-      items.insert({
-        'name': skin['name'],
-        'type': 'skin' 
-      })
+      insertItem(skin['name'], 'skin')
