@@ -13,7 +13,7 @@ def insertItem(name, id, type):
     })
 
 client = MongoClient('localhost', 27017)
-db = client.grandpateemo
+db = client.skinsfarm
 items = db.items
 
 data = requests.get("https://na.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=all&api_key=01c86c6c-0907-434b-b8c9-d2762a953475")

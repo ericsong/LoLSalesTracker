@@ -59,7 +59,7 @@ for item in items:
 
 #get currently grabbed sales
 client = MongoClient('localhost', 27017)
-db = client.grandpateemo
+db = client.skinsfarm
 sales = db.sales
 db_sales = []
 
