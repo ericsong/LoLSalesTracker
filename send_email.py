@@ -7,9 +7,10 @@ password = os.environ['sg_password']
 sg = sendgrid.SendGridClient(username, password)
 
 message = sendgrid.Mail()
-message.add_to('Eric Song <eric.song@rutgers.edu>')
-message.set_subject('hi')
-message.set_html('Body')
-message.set_text('Body')
-message.set_from('Eric Song <blah blah blah@eric-song.com>')
+message.add_bcc(['eric.song@rutgers.edu'])
+message.set_subject('An item on your wishlist is on sale!')
+message.set_text('Yay!')
+message.set_from('LoLWishList <info@lolwishlist.com>')
 status, msg = sg.send(message)
+print status
+print msg
