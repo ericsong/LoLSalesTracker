@@ -1,6 +1,12 @@
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
+from datetime import datetime, timedelta
+from pytz import timezone
+import pytz
 import requests
+
+eastern = timezone('US/Eastern')
+pacific = timezone('US/Pacific')
 
 def isNormalSale(sale):
   title = sale[0]
@@ -18,9 +24,30 @@ def isPrice(line):
 def cleanString(str):
   return unicode(str).strip()
 
+#might be bug where year is incorrectly set on the new year. too lazy to fix
+def extractDates(str):
+  loc_dt = eastern.localize(datetime.now())
+  pac_dt = loc_dt.astimezone(pacific)
+	
+  date_strings = str[23:].split('-')
+  dates = []
+  for date in date_strings:
+    dates.append(date.strip().split('.')) 
+
+  start_date = pacific.localize(datetime(pac_dt.year, int(dates[0][0]), int(dates[0][1])))
+  end_date = pacific.localize(datetime(pac_dt.year, int(dates[1][0]), int(dates[1][1])))
+  return (start_date, end_date)
+
 def scrapeSales(soup):
   container = soup.find("div", "field field-name-body field-type-text-with-summary field-label-hidden")
+  title = soup.find_all("h1", "article-title")[0].string
   headers = container.find_all("h4")
+
+  dates = extractDates(title)
+  start_date = dates[0]
+  end_date = dates[1]
+
+  print dates[0]
 
   skinNames = [headers[1].string, headers[2].string, headers[3].string]
   champNames = [headers[5].string, headers[6].string, headers[7].string]
@@ -39,7 +66,9 @@ def scrapeSales(soup):
 
   sale = {
     "skins": skins,
-    "champs": champs
+    "champs": champs,
+    "start_date": start_date,
+    "end_date": end_date
   }
 
   return sale
@@ -81,7 +110,9 @@ for sale in new_sales:
     "href": sale[1],
     "title": sale[0],
     "skins": scraped_data["skins"],
-    "champs": scraped_data["champs"]
+    "champs": scraped_data["champs"],
+    "start_date": scraped_data['start_date'],
+    "end_date": scraped_data['end_date']
   })
 
   #schedule sending script
