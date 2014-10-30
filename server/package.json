@@ -1,0 +1,22 @@
+{
+  "name": "LoLWishList",
+  "description": "wishlist notifier for LoL sales",
+  "version": "0.0.1",
+  "author": "Eric Song",
+  "scripts": {
+    "start": "server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ericsong/LoLWishList"
+  },
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.2.x"
+  },
+  "dependencies": {
+    "body-parser": "^1.8.3",
+    "express": "^4.9.4",
+    "jade": "^1.7.0"
+  }
+}
