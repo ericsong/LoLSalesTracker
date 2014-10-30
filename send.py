@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 import sys
-
+#asda
 sale_url = sys.argv[1]
 client = MongoClient('localhost', 27017)
 db = client.skinsfarm
