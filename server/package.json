@@ -17,6 +17,8 @@
   "dependencies": {
     "body-parser": "^1.8.3",
     "express": "^4.9.4",
-    "jade": "^1.7.0"
+    "express-session": "^1.9.1",
+    "jade": "^1.7.0",
+    "mongoose": "^3.8.18"
   }
 }

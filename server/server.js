@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.set('view engine', 'jade');
 
 // database setup
-mongoose.connect('mongodb://localhost/lolwishlist');
+mongoose.connect('mongodb://localhost/skinsfarm');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function cb() {
@@ -22,11 +22,30 @@ db.once('open', function cb() {
 });
 
 // item schema
-var itemSchema = mongoose.Schema({
+var ItemSchema = mongoose.Schema({
 	type: String,
 	name: String,
 	id: Number	
+    }),
+    Item = mongoose.model('items', ItemSchema);
+
+//
+// init
+//
+
+//cache champ list
+var champions = [];
+Item.find({type: "champ"}, function(err, champs) {
+	for(var i = 0; i < champs.length; i++) {
+        champions.push({
+            name: champs[i]['name'],
+            id: champs[i]['id']
+        });
+    }
 });
+
+//start server
+server.listen(8000);
 
 //
 //express functions
@@ -34,7 +53,7 @@ var itemSchema = mongoose.Schema({
 
 //return list of champion names
 app.get('/getChampions', function(req, res) {
-	res.json();
+	res.json(champions);
 });
 
 //get list of skins for champ
