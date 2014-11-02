@@ -58,7 +58,23 @@ app.get('/getChampions', function(req, res) {
 
 //get list of skins for champ
 app.get('/getChampSkins', function(req, res) {
-	res.json();	
+    var champ = req.query.champ;
+    champ = champ.replace(/\s/g, '').trim().toLowerCase();
+
+    Item.find({'champ': champ}, function(err, data) {
+        var skins = [];
+
+        for(var i = 0; i < data.length; i++) {
+            skins.push({
+                type: data[i]['type'],
+                champ: data[i]['champ'],
+                name: data[i]['name'],
+                id: data[i]['id']
+            });
+        }
+
+	    res.json(skins);	
+    });
 });
 
 //save a wishlist
