@@ -12,14 +12,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.set('view engine', 'jade');
 
-//init routine
-//start game
-
 //express functions
-app.get('/', function(req, res) {
-  res.render('index.jade');
+
+//return list of champion names
+app.get('/getChampions', function(req, res) {
+	res.json();
 });
 
-app.get('/testBroadcast', function(req, res) {
-  broadcastPlayers("test", {msg: "hello players"});
+//get list of skins for champ
+app.get('/getChampSkins', function(req, res) {
+	res.json();	
+});
+
+//save a wishlist
+app.post('/saveWishlist', function(req, res) {
+
 });
