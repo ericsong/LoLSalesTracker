@@ -5,13 +5,24 @@ import requests
 
 LOL_API_KEY = os.environ['LOL_API_KEY']
 
-def insertItem(name, id, type):
+def insertChamp(name, id):
   item = items.find_one({'id': id}) 
   if item is None:
     items.insert({
       'name': "".join(name.split()).lower(),
+      'champ': "".join(name.split()).lower(),
       'id': id,
-      'type': type
+      'type': 'champ'
+    })
+
+def insertSkin(name, champ, id):
+  item = items.find_one({'id': id}) 
+  if item is None:
+    items.insert({
+      'name': "".join(name.split()).lower(),
+      'champ': "".join(champ.split()).lower(),
+      'id': id,
+      'type': 'skin'
     })
 
 client = MongoClient('localhost', 27017)
@@ -26,6 +37,6 @@ for champ in champions:
   skins = champ_data['skins']
   for skin in skins:
     if skin['name'] == 'default':
-      insertItem(champ_data['name'], skin['id'], 'champ')
+      insertChamp(champ_data['name'], skin['id'])
     else: 
-      insertItem(skin['name'], skin['id'], 'skin')
+      insertSkin(skin['name'], champ_data['name'], skin['id'])
