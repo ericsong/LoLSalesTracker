@@ -2,9 +2,8 @@
 	width: 500px;
 	height: 300px;
 	border: 1px solid black;
-  margin-left: auto;
-  margin-right: auto;
-	float: left;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .splash-container {
@@ -32,13 +31,18 @@
 }
 
 .wishlist {
+  position: fixed;
   width: 290px;
-  min-height: 100%;
+  height: 100%;
   border: 1px solid blue;
   float: left;
 }
 
 .select-area {
-  margin-left: 290px;
-  float: left;
+  margin-left: 292px;
+  overflow: hidden;
+}
+
+.select-area .row{
+	height: auto;
 }
