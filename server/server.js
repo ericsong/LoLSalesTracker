@@ -25,6 +25,7 @@ db.once('open', function cb() {
 var ItemSchema = mongoose.Schema({
 	type: String,
 	name: String,
+	display_name: String,
 	id: Number	
     }),
     Item = mongoose.model('items', ItemSchema);
@@ -39,8 +40,11 @@ Item.find({type: "champ"}, function(err, champs) {
 	for(var i = 0; i < champs.length; i++) {
         champions.push({
             name: champs[i]['name'],
+			display_name: champs[i]['display_name'],
             id: champs[i]['id']
         });
+		console.log(champs[i]);
+		console.log(champs[i]['key']);
     }
 });
 

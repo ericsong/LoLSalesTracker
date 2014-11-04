@@ -46,3 +46,25 @@
 .select-area .row{
 	height: auto;
 }
+
+.champ-input {
+	width: 350px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+}
+
+.champ-input input {
+	width: 239px;
+	height: 40px;
+	margin: 0 0 0 0;
+	margin-right: 10px;
+	text-align: center;
+	font-size: 18px;
+	float: left;
+}
+
+.champ-input button {
+	width: 101px;
+	height: 40px;
+}

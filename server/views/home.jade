@@ -10,10 +10,9 @@ body
 	div.wishlist
 	ul.small-block-grid-1.select-area
 		li
-			div.select-item
-				div.splash-container
-					img(src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Brand_3.jpg")
-				div.title-container Brand
+			div.champ-input
+				input(id="champ-input", type="text", list="champions", placeholder="Enter champion name")
+				button.tiny(id="load-skins-button") View Skins
 		li
 			div.select-item
 				div.splash-container
@@ -24,7 +23,14 @@ body
 				div.splash-container
 					img(src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Brand_3.jpg")
 				div.title-container Brand
+		li
+			div.select-item
+				div.splash-container
+					img(src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Brand_3.jpg")
+				div.title-container Brand
+	datalist(id="champions")
 
 footer
 	script(src='foundation/js/vendor/jquery.js')
 	script(src='foundation/js/foundation.min.js')
+	script(src='js/script.js')
