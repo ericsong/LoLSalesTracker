@@ -51,6 +51,11 @@ server.listen(8000);
 //express functions
 //
 
+//landing page
+app.get('/', function(req, res) {
+    res.render('home.jade');
+});
+
 //return list of champion names
 app.get('/getChampions', function(req, res) {
 	res.json(champions);
