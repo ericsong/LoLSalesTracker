@@ -7,28 +7,36 @@ head
 	link(href='http://fonts.googleapis.com/css?family=EB+Garamond', rel='stylesheet', type='text/css')
 	script(src='foundation/js/modernizr.js')
 body
+	div.fixed
+		nav.top-bar
+
 	div.wishlist
 	ul.small-block-grid-1.select-area
 		li
 			div.champ-input
 				input(id="champ-input", type="text", list="champions", placeholder="Enter champion name")
 				button.tiny(id="load-skins-button") View Skins
-		li
+		li.item-li
 			div.select-item
 				div.splash-container
 					img(src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Brand_3.jpg")
 				div.title-container Brand
-		li
+		li.item-li
 			div.select-item
 				div.splash-container
 					img(src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Brand_3.jpg")
 				div.title-container Brand
-		li
+		li.item-li
 			div.select-item
 				div.splash-container
 					img(src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Brand_3.jpg")
 				div.title-container Brand
 	datalist(id="champions")
+	li.item-li(id="skin_template", style="display: none;")
+		div.select-item
+			div.splash-container
+				img(src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Brand_3.jpg")
+			div.title-container Brand
 
 footer
 	script(src='foundation/js/vendor/jquery.js')

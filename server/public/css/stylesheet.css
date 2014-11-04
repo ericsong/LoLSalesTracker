@@ -1,9 +1,14 @@
+.nav-bar { 
+	position: fixed;
+}
+
 .select-item {
-	width: 500px;
+	width: 498px;
 	height: 300px;
-	border: 1px solid black;
+	background-color: #CEE2EB;
 	margin-left: auto;
 	margin-right: auto;
+	overflow: auto;
 }
 
 .splash-container {
@@ -34,13 +39,16 @@
   position: fixed;
   width: 290px;
   height: 100%;
-  border: 1px solid blue;
+  background-color: #98DDFA;
+  overflow: hidden;
   float: left;
 }
 
 .select-area {
+  height: auto;
   margin-left: 292px;
-  overflow: hidden;
+  background-color: #B8CBD4;
+  overflow: auto;
 }
 
 .select-area .row{
@@ -51,7 +59,7 @@
 	width: 350px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 50px;
+	margin-top: 80px;
 }
 
 .champ-input input {

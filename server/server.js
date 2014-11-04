@@ -26,6 +26,7 @@ var ItemSchema = mongoose.Schema({
 	type: String,
 	name: String,
 	display_name: String,
+	splash_url: String,
 	id: Number	
     }),
     Item = mongoose.model('items', ItemSchema);
@@ -78,6 +79,8 @@ app.get('/getChampSkins', function(req, res) {
                 type: data[i]['type'],
                 champ: data[i]['champ'],
                 name: data[i]['name'],
+                display_name: data[i]['display_name'],
+				splash_url: data[i]['splash_url'],
                 id: data[i]['id']
             });
         }
