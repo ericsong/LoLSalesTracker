@@ -11,6 +11,7 @@ var createSkinItem = function(skin) {
 	var newItem = $('#skin_template').clone();
 	$($(newItem).find('img')[0]).attr('src', skin.splash_url);;
 	$($(newItem).find('.title-container')[0]).text(skin.display_name);
+	newItem.removeAttr('id');
 	newItem.css('display', 'inline');
 	return newItem;
 }
