@@ -55,6 +55,11 @@
   width: 80%;
   background-color: #B8CBD4;
   margin: 0 auto;
+  overflow: auto;
+}
+
+.padding {
+  visibility: hidden;
 }
 
 .wishlist button {
@@ -63,6 +68,26 @@
   margin-top: 8px;
   font-size: 20px;
   font-family: 'EB Garamond', serif;
+}
+
+.wishlist-item {
+	margin: 10px 30px;
+	color: #173B4D;
+	font-family: 'EB Garamond', serif;
+	overflow: auto;
+}
+
+.wishlist-item div {
+	width: 70%;
+	margin-left: 20px;
+	white-space: nowrap;
+	overflow: hidden;
+	float: left;	
+}
+
+.wishlist-item input {
+	float: right;
+	height: 25px;
 }
 
 .select-area {
