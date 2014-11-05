@@ -133,6 +133,12 @@
     font-family: 'EB Garamond', serif;
 }
 
+.css3-shadow-wishlist{
+    position:relative;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
 .css3-shadow{
     position:relative;
     -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);

@@ -1,4 +1,5 @@
 LOLWISHLIST_APP = {}
+LOLWISHLIST_APP.wishlist = [];
 
 var clearSkins = function() {
 	var current_items = $('.select-area li.item-li');
@@ -11,6 +12,7 @@ var createSkinItem = function(skin) {
 	var newItem = $('#skin_template').clone();
 	$($(newItem).find('img')[0]).attr('src', skin.splash_url);;
 	$($(newItem).find('.title-container')[0]).text(skin.display_name);
+	newItem.click(addItemClick);
 	newItem.removeAttr('id');
 	newItem.css('display', 'inline');
 	return newItem;
@@ -20,6 +22,49 @@ var loadSkins = function(skins) {
 	for(var i = 0; i < skins.length; i++) {
 		var newItem = createSkinItem(skins[i]).hide().fadeIn(2000);
 		$('.select-area').append(newItem);
+	}
+}
+
+var addItemClick = function() {
+	var title = $($(this).find('.title-container')[0]).text();
+	addToWishlist(title);
+
+	//remove from list
+	$(this).fadeOut(500);
+}
+
+var removeItemClick = function() {
+	var title = $($(this).parent().find('div')[0]).text();
+	removeFromWishlist(title);
+}
+
+//add to wishlist var and draw item
+var addToWishlist = function(title) {
+	LOLWISHLIST_APP.wishlist.push(title);
+	var newItem = $('#wishlist_template').clone();
+	$($(newItem).find('div')[0]).text(title);
+	$($(newItem).find('input')[0]).click(removeItemClick);
+	newItem.removeAttr('id');
+	newItem.css('display', 'list-item');
+	newItem.hide().fadeIn(500);
+	$($('.wishlist-list ul')[0]).append(newItem);
+}
+
+var removeFromWishlist = function(title) {
+	var index = LOLWISHLIST_APP.wishlist.indexOf(title);
+
+	//remove from wishlist array
+	if(index > -1) {
+		LOLWISHLIST_APP.wishlist.splice(index, 1);
+	}
+
+	//remove from wishlist html
+	items = $('.wishlist-list ul li');
+	for(var i = 0; i < items.length; i++) {
+		if($($(items[i]).find('div')[0]).text() === title) {
+			$(items[i]).fadeOut(500);
+			break;
+		}
 	}
 }
 
