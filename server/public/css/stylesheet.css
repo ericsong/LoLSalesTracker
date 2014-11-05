@@ -14,7 +14,6 @@
 .splash-container {
 	width: 400px;
 	height: 240px;
-	background-color: gray;
 	padding: 5px 4px;
 	margin-left: auto;
 	margin-right: auto;
@@ -75,4 +74,25 @@
 .champ-input button {
 	width: 101px;
 	height: 40px;
+}
+
+.css3-shadow{
+    position:relative;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.css3-shadow:after{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    -webkit-box-shadow:0 0 40px rgba(0,0,0,0.8);
+    box-shadow:0 0 40px rgba(0,0,0,0.8);
+    bottom:0px;
+    left:10%;
+    right:10%;
+    width:80%;
+    height:50%;
+    -moz-border-radius:100%;
+    border-radius:100%;
 }
