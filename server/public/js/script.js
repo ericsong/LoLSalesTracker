@@ -43,3 +43,10 @@ $('#load-skins-button').click(function() {
 		console.log(data);
 	});
 });
+
+//Load default champ
+clearSkins();
+$.get('/getChampSkins', {champ: 'annie'}, function(data) {
+		loadSkins(data);
+		console.log(data);
+});

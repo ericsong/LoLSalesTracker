@@ -66,7 +66,7 @@
 }
 
 .select-area {
-  height: auto;
+  height: 100%;
   margin-left: 292px;
   background-color: #B8CBD4;
   overflow: auto;
@@ -99,6 +99,12 @@
 	height: 40px;
     background-color: #89B3C7;
 	font-size: 14px;
+    font-family: 'EB Garamond', serif;
+}
+
+.select-area li h5 {
+	text-align: center;
+	color: #173B4D;
     font-family: 'EB Garamond', serif;
 }
 
