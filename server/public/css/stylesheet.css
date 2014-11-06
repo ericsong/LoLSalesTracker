@@ -6,6 +6,22 @@ h4 {
 	position: fixed;
 }
 
+.select-area li{
+	position: absolute; 
+	transition: all 0.2s ease-out;
+	-webkit-transition: all 0.2s ease-out;
+}
+
+.select-area li:nth-child(1) { -webkit-transform: translate3d(0, 0%, 0); transform: translate3d(0, 0%, 0); }
+.select-area li:nth-child(2) { -webkit-transform: translate3d(0, 100%, 0); transform: translate3d(0, 100%, 0); }
+.select-area li:nth-child(3) { -webkit-transform: translate3d(0, 200%, 0); transform: translate3d(0, 200%, 0); }
+.select-area li:nth-child(4) { -webkit-transform: translate3d(0, 300%, 0); transform: translate3d(0, 300%, 0); }
+.select-area li:nth-child(5) { -webkit-transform: translate3d(0, 400%, 0); transform: translate3d(0, 400%, 0); }
+.select-area li:nth-child(6) { -webkit-transform: translate3d(0, 500%, 0); transform: translate3d(0, 500%, 0); }
+.select-area li:nth-child(7) { -webkit-transform: translate3d(0, 600%, 0); transform: translate3d(0, 600%, 0); }
+.select-area li:nth-child(8) { -webkit-transform: translate3d(0, 700%, 0); transform: translate3d(0, 700%, 0); }
+.select-area li:nth-child(9) { -webkit-transform: translate3d(0, 800%, 0); transform: translate3d(0, 800%, 0); }
+
 .select-item {
 	width: 498px;
 	height: 300px;
@@ -13,8 +29,6 @@ h4 {
 	margin-left: auto;
 	margin-right: auto;
 	overflow: auto;
-	-webkit-transition: all 0.2s ease-out;
-	transition: all 0.2s east-out;
 }
 
 .splash-container {
@@ -96,9 +110,16 @@ h4 {
 	height: 25px;
 }
 
+.content {
+	margin-left: 290px;
+  	background-color: #B8CBD4;
+}
+
 .select-area {
+  position: relative;
+  width: 100%;
   height: 100%;
-  margin-left: 292px;
+  margin: 0 0;
   background-color: #B8CBD4;
   overflow: auto;
 }
@@ -111,13 +132,14 @@ h4 {
 	width: 350px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 80px;
+	margin-top: 45px;
 }
 
 .champ-input input {
 	width: 239px;
 	height: 40px;
 	margin: 0 0 0 0;
+	margin-top: 20px;
 	margin-right: 10px;
 	text-align: center;
 	font-size: 18px;
@@ -128,12 +150,13 @@ h4 {
 .champ-input button {
 	width: 101px;
 	height: 40px;
+	margin-top: 20px;
     background-color: #89B3C7;
 	font-size: 14px;
     font-family: 'EB Garamond', serif;
 }
 
-.select-area li h5 {
+.content h5 {
 	text-align: center;
 	color: #173B4D;
     font-family: 'EB Garamond', serif;

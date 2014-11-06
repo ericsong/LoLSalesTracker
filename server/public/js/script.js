@@ -22,7 +22,7 @@ var createSkinItem = function(skin) {
 
 var loadSkins = function(skins) {
 	for(var i = 0; i < skins.length; i++) {
-		var newItem = createSkinItem(skins[i]).hide().fadeIn(2000);
+		var newItem = createSkinItem(skins[i]).hide().fadeIn(1000);
 		$('.select-area').append(newItem);
 	}
 }
@@ -32,7 +32,7 @@ var addItemClick = function() {
 	addToWishlist(title);
 
 	//remove from list
-	$(this).fadeOut(500);
+	$(this).fadeOut(500, function() { $(this).remove(); });
 }
 
 var removeItemClick = function() {
