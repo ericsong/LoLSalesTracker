@@ -14,7 +14,7 @@ var createSkinItem = function(skin) {
 	var newItem = $('#skin_template').clone();
 	$($(newItem).find('img')[0]).attr('src', skin.splash_url);;
 	$($(newItem).find('.title-container')[0]).text(skin.display_name);
-	newItem.click(addItemClick);
+	$($(newItem).find('.select-item')[0]).click(addItemClick);
 	newItem.removeAttr('id');
 	newItem.css('display', 'inline');
 	return newItem;
@@ -32,7 +32,7 @@ var addItemClick = function() {
 	addToWishlist(title);
 
 	//remove from list
-	$(this).fadeOut(500, function() { $(this).remove(); });
+	$(this).parent().fadeOut(500, function() { $(this).remove(); });
 }
 
 var removeItemClick = function() {
