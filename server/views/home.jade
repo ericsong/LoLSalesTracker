@@ -5,7 +5,6 @@ head
 	link(rel='stylesheet', href='foundation/css/foundation.css')
 	link(rel='stylesheet', href='css/stylesheet.css')
 	link(href='http://fonts.googleapis.com/css?family=EB+Garamond', rel='stylesheet', type='text/css')
-	script(src='foundation/js/modernizr.js')
 body
 	div.fixed
 		nav.top-bar
@@ -15,7 +14,8 @@ body
 		div.wishlist-list.css3-shadow
 			ul.no-bullet
 				li.padding hello
-		button(id=wishlist-submit) Save
+		a.button(id='wishlist-submit', href='#', data-reveal-id='submitModal') Save
+
 	ul.small-block-grid-1.select-area
 		li
 			div.champ-input
@@ -23,6 +23,14 @@ body
 				button.tiny(id="load-skins-button") View Skins
 			h5 Click on a skin to add to your wishlist
 		datalist(id="champions")
+
+	div.reveal-modal(data-reveal='', id="submitModal")
+		h4 Enter the email address you want to be notified at
+		div
+			input(id="email-input", type="text")
+			button.tiny(id="saveWishlist") Save wishlist
+		a.close-reveal-modal &#215;
+
 	li.item-li(id="skin_template", style="display: none;")
 		div.select-item.css3-shadow
 			div.splash-container.css3-shadow

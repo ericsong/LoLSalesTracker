@@ -1,3 +1,5 @@
+$(document).foundation();
+
 LOLWISHLIST_APP = {}
 LOLWISHLIST_APP.wishlist = [];
 
