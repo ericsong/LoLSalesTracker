@@ -94,6 +94,17 @@ $('#load-skins-button').click(function() {
 	});
 });
 
+$('#saveWishlist').click(function() {
+	var email = $('#email-input').val();
+	
+	$.post('/saveWishlist', {
+		'email': email,
+		'wishlist': LOLWISHLIST_APP.wishlist
+	}, function(data) {
+		console.log(data);
+	});
+});
+
 //Load default champ
 clearSkins();
 $.get('/getChampSkins', {champ: 'annie'}, function(data) {

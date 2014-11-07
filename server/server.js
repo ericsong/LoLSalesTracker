@@ -31,6 +31,13 @@ var ItemSchema = mongoose.Schema({
     }),
     Item = mongoose.model('items', ItemSchema);
 
+var UserSchema = mongoose.Schema({
+	email: String,
+	wishlist: Array,
+	verified: Boolean
+	}),
+	User = mongoose.model('users', UserSchema);
+
 //
 // init
 //
@@ -44,9 +51,15 @@ Item.find({type: "champ"}, function(err, champs) {
 			display_name: champs[i]['display_name'],
             id: champs[i]['id']
         });
-		console.log(champs[i]);
-		console.log(champs[i]['key']);
     }
+});
+
+var nameToId = {};
+Item.find({}, function(err, items) {
+	for(var i = 0; i < items.length; i++) {
+		nameToId[items[i].name] = items[i].id;
+	}
+	console.log(nameToId);
 });
 
 //start server
@@ -91,5 +104,28 @@ app.get('/getChampSkins', function(req, res) {
 
 //save a wishlist
 app.post('/saveWishlist', function(req, res) {
+	var email = req.body.email,
+		wishlist = req.body['wishlist[]'];
 
+	for(var i = 0; i < wishlist.length; i++) {
+    	var key = wishlist[i].replace(/\s/g, '').trim().toLowerCase();
+		wishlist[i] = nameToId[key];
+	}
+
+	var new_user = new User({
+		email: email,
+		wishlist: wishlist,
+		verified: false
+	});
+
+	new_user.save(function(err) {
+		if(err) {
+			res.json({
+				'msg': 'failed', 
+				'err': err
+			});
+		}
+
+		res.json({'msg': 'success'});
+	});
 });
