@@ -2,6 +2,7 @@ $(document).foundation();
 
 LOLWISHLIST_APP = {}
 LOLWISHLIST_APP.wishlist = [];
+LOLWISHLIST_APP.saved = false;
 
 var clearSkins = function() {
 	var current_items = $('.select-area li.item-li');
@@ -95,14 +96,19 @@ $('#load-skins-button').click(function() {
 });
 
 $('#saveWishlist').click(function() {
-	var email = $('#email-input').val();
-	
-	$.post('/saveWishlist', {
+	if(!LOLWISHLIST_APP.saved) {
+		var email = $('#email-input').val();
+
+		//disable button from being clicked (until save is reopened)
+		LOLWISHLIST_APP.saved = true;
+
+		$.post('/saveWishlist', {
 		'email': email,
 		'wishlist': LOLWISHLIST_APP.wishlist
-	}, function(data) {
+		}, function(data) {
 		console.log(data);
-	});
+		});
+	}
 });
 
 //Load default champ
