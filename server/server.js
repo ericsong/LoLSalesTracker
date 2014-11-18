@@ -32,7 +32,7 @@ var ItemSchema = mongoose.Schema({
     Item = mongoose.model('items', ItemSchema);
 
 var UserSchema = mongoose.Schema({
-	email: String,
+  email: { type: String, unique: true },
 	wishlist: Array,
 	verified: Boolean
 	}),
@@ -120,12 +120,14 @@ app.post('/saveWishlist', function(req, res) {
 
 	new_user.save(function(err) {
 		if(err) {
-			res.json({
+      console.log(err);
+      
+			return res.json({
 				'msg': 'failed', 
 				'err': err
 			});
 		}
 
-		res.json({'msg': 'success'});
+		return res.json({'msg': 'success'});
 	});
 });
