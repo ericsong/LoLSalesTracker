@@ -97,6 +97,7 @@ $('#load-skins-button').click(function() {
 
 $('#saveWishlist').click(function() {
 	if(!LOLWISHLIST_APP.saved) {
+    $('#saveWishlist').text("Saving...");
 		var email = $('#email-input').val();
 
 		//disable button from being clicked (until save is reopened)
