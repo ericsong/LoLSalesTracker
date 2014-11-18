@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 client = MongoClient('localhost', 27017)
-db = client.skinsfarm
+db = client.lolwishlist
 users = db.users
 
 #upload data

@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.set('view engine', 'jade');
 
 // database setup
-mongoose.connect('mongodb://localhost/skinsfarm');
+mongoose.connect('mongodb://localhost/lolwishlist');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function cb() {

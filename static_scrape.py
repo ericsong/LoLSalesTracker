@@ -29,7 +29,7 @@ def insertSkin(name, champ, id):
     })
 
 client = MongoClient('localhost', 27017)
-db = client.skinsfarm
+db = client.lolwishlist
 items = db.items
 
 data = requests.get("https://na.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=all&api_key=" + LOL_API_KEY)

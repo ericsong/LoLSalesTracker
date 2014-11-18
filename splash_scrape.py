@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import requests
 
 client = MongoClient('localhost', 27017)
-db = client.skinsfarm
+db = client.lolwishlist
 items = db.items
 
 champs = items.find({'type': 'champ'})
