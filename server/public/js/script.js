@@ -103,10 +103,18 @@ $('#saveWishlist').click(function() {
 		LOLWISHLIST_APP.saved = true;
 
 		$.post('/saveWishlist', {
-		'email': email,
-		'wishlist': LOLWISHLIST_APP.wishlist
+		  'email': email,
+		  'wishlist': LOLWISHLIST_APP.wishlist
 		}, function(data) {
-		console.log(data);
+		  console.log(data);
+
+      if(data.msg === 'success') {
+        $('#saveWishlist').text("Saved!");
+        $('#saveWishlist').css('background-color', '#00ba2e');
+      } else if (data.msg === 'failed') {
+        $('#saveWishlist').text("Save failed...");
+        $('#saveWishlist').css('background-color', '#ba2e00');
+      }
 		});
 	}
 });
