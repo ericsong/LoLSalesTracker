@@ -47,12 +47,13 @@ def scrapeSales(soup):
   start_date = dates[0]
   end_date = dates[1]
 
-  print dates[0]
-
   skinNames = [headers[1].string, headers[2].string, headers[3].string]
   champNames = [headers[5].string, headers[6].string, headers[7].string]
 
-  skinPrices = filter(isPrice, headers[1].parent.contents)
+  skinPrices = [  filter(isPrice, headers[1].parent.contents)[0],
+                  filter(isPrice, headers[2].parent.contents)[0],
+                  filter(isPrice, headers[3].parent.contents)[0] ]
+  
   champPrices = [ filter(isPrice, headers[5].parent.contents)[0],
                   filter(isPrice, headers[6].parent.contents)[0],
                   filter(isPrice, headers[7].parent.contents)[0] ]
@@ -100,6 +101,8 @@ new_sales = set(scraped_sales).difference(set(db_sales))
 
 #filter out non regular sales (for now)
 new_sales = filter(isNormalSale, new_sales) 
+
+print new_sales
 
 #do a thing
 for sale in new_sales:
