@@ -101,6 +101,8 @@ app.get('/getChampSkins', function(req, res) {
             });
         }
 
+        console.log(skins);
+
 	    res.json(skins);	
     });
 });
