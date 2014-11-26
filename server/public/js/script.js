@@ -97,16 +97,25 @@ $('#load-skins-button').click(function() {
 
 $('#saveWishlist').click(function() {
 	if(!LOLWISHLIST_APP.saved) {
+    $('#saveWishlist').text("Saving...");
 		var email = $('#email-input').val();
 
 		//disable button from being clicked (until save is reopened)
 		LOLWISHLIST_APP.saved = true;
 
 		$.post('/saveWishlist', {
-		'email': email,
-		'wishlist': LOLWISHLIST_APP.wishlist
+		  'email': email,
+		  'wishlist': LOLWISHLIST_APP.wishlist
 		}, function(data) {
-		console.log(data);
+		  console.log(data);
+
+      if(data.msg === 'success') {
+        $('#saveWishlist').text("Saved!");
+        $('#saveWishlist').css('background-color', '#00ba2e');
+      } else if (data.msg === 'failed') {
+        $('#saveWishlist').text("Save failed...");
+        $('#saveWishlist').css('background-color', '#ba2e00');
+      }
 		});
 	}
 });
