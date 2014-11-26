@@ -12,6 +12,11 @@ for champ in champs:
   champ_key = champ['key'].lower()
   url = "http://gameinfo.na.leagueoflegends.com/en/game-info/champions/" + champ_key + "/"  
   data = requests.get(url)
+
+  if data.status_code is not 200:
+    print url
+    continue
+
   soup = BeautifulSoup(data.text)
   img_container = soup.find('div', 'gs-container default-3-col')
   skins_containers = img_container.find_all('a')
@@ -24,7 +29,7 @@ for champ in champs:
       title = champ['name']
     else:
       title = "".join(skin_c.get('title').split()).lower()
- 
+
     matched_item = items.find_one({'name': title})
 
     if matched_item is not None:
