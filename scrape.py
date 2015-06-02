@@ -74,48 +74,52 @@ def scrapeSales(soup):
 
   return sale
 
-#grab page
-data = requests.get("http://na.leagueoflegends.com/en/news/store/sales").text
-soup = BeautifulSoup(data)
-items = soup.find_all("div", "gs-container")
-scraped_sales = []
+def checkForNewSales():
+  #grab page
+  data = requests.get("http://na.leagueoflegends.com/en/news/store/sales").text
+  soup = BeautifulSoup(data)
+  items = soup.find_all("div", "gs-container")
+  scraped_sales = []
 
-#scrape sale data  ("title", "href")
-for item in items:
-  temp = item.find("div", "default-2-3")
-  if(temp is not None):
-    a_link = temp.find("a")
-    scraped_sales.append((a_link.string, a_link.get('href')))
+  #scrape sale data  ("title", "href")
+  for item in items:
+    temp = item.find("div", "default-2-3")
+    if(temp is not None):
+      a_link = temp.find("a")
+      scraped_sales.append((a_link.string, a_link.get('href')))
 
-#get currently grabbed sales
-client = MongoClient('localhost', 27017)
-db = client.lolwishlist
-sales = db.sales
-db_sales = []
+  #get currently grabbed sales
+  client = MongoClient('localhost', 27017)
+  db = client.lolwishlist
+  sales = db.sales
+  db_sales = []
 
-for sale in sales.find():
-  db_sales.append((sale['title'], sale['href']))
+  for sale in sales.find():
+    db_sales.append((sale['title'], sale['href']))
 
-#find new sales
-new_sales = set(scraped_sales).difference(set(db_sales))
+  #find new sales
+  new_sales = set(scraped_sales).difference(set(db_sales))
 
-#filter out non regular sales (for now)
-new_sales = filter(isNormalSale, new_sales) 
+  #filter out non regular sales (for now)
+  new_sales = filter(isNormalSale, new_sales) 
 
-print new_sales
+  print new_sales
 
-#do a thing
-for sale in new_sales:
-  data = requests.get("http://na.leagueoflegends.com" + sale[1]).text
-  soup = BeautifulSoup(data) 
-  scraped_data = scrapeSales(soup)
-  sales.insert({
-    "href": sale[1],
-    "title": sale[0],
-    "skins": scraped_data["skins"],
-    "champs": scraped_data["champs"],
-    "start_date": scraped_data['start_date'],
-    "end_date": scraped_data['end_date']
-  })
+  return_obj = []
 
-  #schedule sending script
+  #do a thing
+  for sale in new_sales:
+    data = requests.get("http://na.leagueoflegends.com" + sale[1]).text
+    soup = BeautifulSoup(data) 
+    scraped_data = scrapeSales(soup)
+
+    return_obj.append({
+      "href": sale[1],
+      "title": sale[0],
+      "skins": scraped_data["skins"],
+      "champs": scraped_data["champs"],
+      "start_date": scraped_data['start_date'],
+      "end_date": scraped_data['end_date']
+    })
+
+  return return_obj
