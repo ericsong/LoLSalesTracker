@@ -41,6 +41,11 @@ var UserSchema = mongoose.Schema({
 	}),
 	User = mongoose.model('users', UserSchema);
 
+// helper functions
+var toType = function(obj) {
+    return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+}
+
 //
 // init
 //
@@ -113,9 +118,17 @@ app.post('/saveWishlist', function(req, res) {
 	    wishlist = req.body['wishlist[]'],
       token_uuid = uuid.v4();
 
+  //check if wishlist is an array or string. (It'll return as a string if only 1 item is sent)
+  if(toType(wishlist) === "string") {
+    wishlist = [wishlist]
+  }
+
+  console.log(wishlist);
 	for(var i = 0; i < wishlist.length; i++) {
     	var key = wishlist[i].replace(/\s/g, '').trim().toLowerCase();
 		wishlist[i] = nameToId[key];
+    console.log(key);
+    console.log(wishlist[i]);
 	}
 
 	var new_user = new User({
@@ -135,6 +148,7 @@ app.post('/saveWishlist', function(req, res) {
 			});
 		}
 
+    /*
     sendgrid.send({
         to:       email,
         from:     'lolwishlist@gmail.com',
@@ -147,6 +161,9 @@ app.post('/saveWishlist', function(req, res) {
 		  
         return res.json({'msg': 'success'});
     });
+    */
+
+        return res.json({'msg': 'success'});
 	});
 });
 
