@@ -74,7 +74,7 @@ def scrapeSales(soup):
 
   return sale
 
-def checkForNewSales():
+def getNewSales():
   #grab page
   data = requests.get("http://na.leagueoflegends.com/en/news/store/sales").text
   soup = BeautifulSoup(data)
