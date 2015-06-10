@@ -3,34 +3,28 @@ from pymongo import MongoClient
 client = MongoClient('localhost', 27017)
 db = client.lolwishlist
 users = db.users
+db_items = db.items
 
-#upload data
-email = 'regonics@gmail.com'
-wishlist = [35002, 62004, 24000, 5900]
-verified = True
+#get all champions
+champs = db_items.find({'type': "champ"})
 
-users.insert({
-	'email': email,
-	'wishlist': wishlist,
-	'verified': verified
-})
+counter = 0
+user_count = 1;
+wishlist = []
+for champ in champs:
+    items = db_items.find({'champ': champ['champ']})
+    for item in items:
+        wishlist.append(item['id'])
 
-email = 'eric.song@rutgers.edu'
-wishlist = [39000,39001,39002,39003,39004]
-verified = True 
+    counter = counter + 1
 
-users.insert({
-	'email': email,
-	'wishlist': wishlist,
-	'verified': verified
-})
+    if counter == 5:
+        users.insert({
+            'email': 'regonics+lolsalestracker_' + str(user_count) + '@gmail.com',
+            'wishlist': wishlist,
+            'verified': True
+        })
 
-email = 'erichyunjoonsong@gmail.com'
-wishlist = [120000,120001,120002,120003,120004]
-verified = True
-
-users.insert({
-	'email': email,
-	'wishlist': wishlist,
-	'verified': verified
-})
+        user_count = user_count + 1
+        counter = 0
+        wishlist = []
