@@ -20,7 +20,7 @@ sg = sendgrid.SendGridClient(sg_username, sg_password)
 def extractDatesFromTitle(title):
   return title.split(':')[1][1:]
 
-def generateEmailBody(user, sale):
+def generateEmailContent(user, sale):
   #find items in wishlist that are on sale
   saleIds = set(sale['itemIds']).intersection(user['wishlist'])
   saleItems = []
@@ -45,8 +45,23 @@ def generateEmailBody(user, sale):
 
     saleItems.append(item)
 
-    #generating email content
-    isMultiple = True if len(saleItems) > 1 else False
+  #generate email subject
+  if len(saleItems) == 1:
+    subject = saleItems[0]['name'] + " is on sale!"
+  elif len(saleItems) == 2:
+    subject = saleItems[0]['name'] + " and " + saleItems[1]['name'] + " are on sale!"
+  else:
+    subject = saleItems[0]['name']
+
+    for item in saleItems[1:]:
+      subject += ", " + item['name']
+
+    subject += " are on sale!"
+
+  subject += " (" + dateString + ")"
+
+  #generating email body
+  isMultiple = True if len(saleItems) > 1 else False
 
   if isMultiple:
     listHTML =  """<div dir="ltr">Items from your wishlist will be on sale from """ +\
@@ -61,11 +76,13 @@ def generateEmailBody(user, sale):
     listHTML += "-<b>" + item['name'] + " : " + item['cost'] + "</b><br>"
 
   if isMultiple:
-    keepTrackingHTML = """ <br>You will no longer receive email alerts when these items go on sale. If you wish to keep tracking them, please """
+    #keepTrackingHTML = """ <br>You will no longer receive email alerts when these items go on sale. If you wish to keep tracking them, please """
+    keepTrackingHTML = """ <br>You will no longer receive email alerts when these items go on sale. """
   else:
-    keepTrackingHTML = """ <br>You will no longer receive email alerts when this item goes on sale. If you wish to keep tracking it, please """
+    #keepTrackingHTML = """ <br>You will no longer receive email alerts when this item goes on sale. If you wish to keep tracking it, please """
+    keepTrackingHTML = """ <br>You will no longer receive email alerts when this item goes on sale. """
 
-  keepTrackingHTML +=  """<a href="https://www.google.com">click here.</a>"""
+  #keepTrackingHTML +=  """<a href="https://www.google.com">click here.</a>"""
 
   saleListHTML = "<br><br><div><i>Champion and Skin Sales: " + dateString + "</i></div>"
   for champ in sale['champs']:
@@ -77,7 +94,10 @@ def generateEmailBody(user, sale):
   
   unsubscribeHTML = """<a href="http://www.google.com">Click here</a> to unsubscribe form this service.</div></div>"""
 
-  return listHTML + keepTrackingHTML + saleListHTML + unsubscribeHTML
+  return {
+    'subject': subject,
+    'body': listHTML + keepTrackingHTML + saleListHTML + unsubscribeHTML
+  }
 
 def checkForNewSales():
   #grab new sales
@@ -114,10 +134,12 @@ def checkForNewSales():
     #find users that need to be emailed 
     matched_users = db_users.find({"wishlist": { "$in": saleIds }})
     for user in matched_users:
+      emailContent = generateEmailContent(user, sale)
+
       message = sendgrid.Mail()
-      message.add_to('regonics@gmail.com')
-      message.set_subject('Salesalesalesale')
-      message.set_html(generateEmailBody(user, sale))
+      message.add_to(user['email'])
+      message.set_subject(emailContent['subject'])
+      message.set_html(emailContent['body'])
       message.set_from('LoLSalesTracker <tracker@lolsalestracker.com>')
       status, msg = sg.send(message);
       print status
