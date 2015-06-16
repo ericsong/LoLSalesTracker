@@ -1,4 +1,4 @@
-LoLWishList
+LoLSalesTracker
 ===========
 
 Web app that lets users create a wishlist of items from the League of Legends game store.  
