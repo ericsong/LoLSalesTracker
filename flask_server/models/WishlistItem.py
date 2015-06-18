@@ -5,8 +5,8 @@ db = SQLAlchemy()
 
 class WishlistItem(db.Model):
   __tablename__ = 'wishlistItem'
-  user = db.Column(db.String) #FK to 'users'
-  item = db.Column(db.Integer) #FK to 'items'
-  #active (boolean)
-  #time_created (datetime)
-  #time_deactivated
+  user = db.Column(db.String, db.ForeignKey('user.id'))
+  item = db.Column(db.Integer, db.ForeignKey('item.id'))
+  create_time = db.Column(db.DateTime)
+  deactivated_time = db.Column(db.DateTime)
+  active = db.Column(db.Boolean, default=True)

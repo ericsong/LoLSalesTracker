@@ -5,17 +5,19 @@ db = SQLAlchemy()
 
 class User(db.Model):
   __tablename__ = 'users'
-  email = db.Column(db.String, primary_key=True)
+  id = db.Column(db.Integer, primary_key=True)
+  create_time = db.Column(db.DateTime)
+  email = db.Column(db.String, unique=True)
   uuid = db.Column(db.String, unique=True)
-  verified = db.Column(db.Boolean)
+  verified = db.Column(db.Boolean, default=False)
+  wants_emails = db.Column(db.Boolean, default=True)
+  wishlist_items = db.relationship('WishlistItem', backref='user', lazy='dynamic')
 
   def to_json(self):
     return {
       "email": self.email,
       "uuid": self.uuid,
       "verified": self.verified,
-      #created_datetime
-      #send_emails, boolean
     }
 
   def from_json(self, source):

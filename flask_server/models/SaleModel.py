@@ -5,35 +5,17 @@ db = SQLAlchemy()
 
 class Sale(db.Model):
   __tablename__ = 'sales'
-  #id
-  #create_date
-  #start_date
-  #end_date
-  #href
-  #title
-  email = db.Column(db.String, primary_key=True)
-  uuid = db.Column(db.String, unique=True)
-  verified = db.Column(db.Boolean)
-
-  def to_json(self):
-    return {
-      "email": self.email,
-      "uuid": self.uuid,
-      "verified": self.verified,
-      #created_datetime
-      #send_emails, boolean
-    }
-
-  def from_json(self, source):
-    if 'email' in source:
-      self.email = source['email']
-    if 'uuid' in source:
-      self.uuid = source['uuid']
-    if 'verified' in source:
-      self.verified = source['verified']
+  id = db.Column(db.Integer, primary_key=True)
+  create_time = db.Column(db.DateTime)
+  start_time = db.Column(db.DateTime)
+  end_time = db.Column(db.DateTime)
+  href = db.Column(db.String)
+  title = db.Column(db.String)
+  items = db.relationship('SaleItem', backref='sale', lazy='dynamic')
 
 class SaleItem(db.Model):
   __tablename__ = 'saleitems'
-  #saleId (FK to sales)
-  #itemId (FK to items)
-  #price (Integer for RP price)
+  id = db.Column(db.Integer, primary_key=True)
+  sale_id = db.Column(db.Integer, db.ForeignKey('sale.id'))
+  item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
+  price = db.Column(db.Integer)
