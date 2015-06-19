@@ -35,10 +35,9 @@ for champ in champions:
   champ_data = champions[champ]
   skins = champ_data['skins']
 
-  insertItem(champ, champ_data['name'], champ_data['key'], champ_data['id'])
   for skin in skins:
     if(skin['name'] == "default"):
-      insertItem(champ, champ, champ, skin['id'])
+      insertItem(champ, champ_data['name'], champ, skin['id'])
     else:
       insertItem(champ, skin['name'], skin['name'], skin['id'])
 
