@@ -1,9 +1,13 @@
 from pymongo import MongoClient
+import psycopg2
 import threading
 import scrape as LWL
 import os
 import sys
 import sendgrid
+
+def addApos(string):
+  return string.replace('\'', '\'\'')
 
 #db setup
 client = MongoClient('localhost', 27017)
@@ -11,6 +15,9 @@ db = client.lolwishlist
 db_sales = db.sales
 db_items = db.items
 db_users = db.users
+
+con = psycopg2.connect(database='lolsalestracker', user='lolsalestracker_admin2', password='abc123')
+cur = con.cursor()
 
 #sendgrid setup
 sg_username = os.environ['sg_username']
@@ -28,22 +35,26 @@ def generateEmailContent(user, sale):
 
   #transform ids into saleItem objects with display name, Rp price
   for item in saleIds:
-    db_item = db_items.find_one({'id': item})
+    qs = cur.execute("SELECT * FROM items where id=" + str(item))
+    matched_db_item = (cur.fetchall())[0]
 
     for skin in sale['skins']:
-      if db_item['display_name'] == skin[0]:
+      if matched_db_item[3] == skin[0]:
         matched_item = skin
     for champ in sale['champs']:
-      if db_item['display_name'] == champ[0]:
+      if matched_db_item[3] == champ[0]:
         matched_item = champ
 
     item = {
-      'name': db_item['display_name'],
+      'name': matched_db_item[3],
       'id': item,
       'cost': matched_item[1]
     }
 
     saleItems.append(item)
+
+  print(saleItems)
+  sys.exit(1)
 
   #generate email subject
   if len(saleItems) == 1:
@@ -104,29 +115,31 @@ def checkForNewSales():
   sales = LWL.getNewSales()
   for sale in sales:
     #upload to database
-    print sale['title']
-    print sale['champs']
-    print sale['skins']
+    print(sale['title'])
+    print(sale['champs'])
+    print(sale['skins'])
     db_sales.insert(sale);
 
     #generate item basket with item ids
     saleIds = []
     saleNames = []
     for champ in sale['champs']:
-      matched_item = db_items.find_one({"display_name": champ[0]})
+      qs = cur.execute("SELECT * FROM items where name='" + addApos(champ[0]) + "'")
+      matched_item = (cur.fetchall())[0]
       if matched_item:
-        saleIds.append(matched_item['id'])
+        saleIds.append(matched_item[0])
         saleNames.append(champ[0])
       else:
-        print "no match error"
+        print("no match error")
 
     for skin in sale['skins']:
-      matched_item = db_items.find_one({"display_name": skin[0]})
+      qs = cur.execute("SELECT * FROM items where name='" + addApos(skin[0]) + "'")
+      matched_item = (cur.fetchall())[0]
       if matched_item:
-        saleIds.append(matched_item['id'])
+        saleIds.append(matched_item[0])
         saleNames.append(skin[0])
       else:
-        print "no match error"
+        print("no match error")
 
     sale['itemIds'] = saleIds
     sale['itemNames'] = saleNames
@@ -142,7 +155,7 @@ def checkForNewSales():
       message.set_html(emailContent['body'])
       message.set_from('LoLSalesTracker <tracker@lolsalestracker.com>')
       status, msg = sg.send(message);
-      print status
+      print(status)
 
   # call f() again in 60 seconds
   threading.Timer(60, checkForNewSales).start()

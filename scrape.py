@@ -22,7 +22,7 @@ def isPrice(line):
     return False
 
 def cleanString(str):
-  return unicode(str).strip()
+  return str.strip()
 
 #might be bug where year is incorrectly set on the new year. too lazy to fix
 def extractDates(str):
@@ -50,13 +50,13 @@ def scrapeSales(soup):
   skinNames = [headers[1].string, headers[2].string, headers[3].string]
   champNames = [headers[5].string, headers[6].string, headers[7].string]
 
-  skinPrices = [  filter(isPrice, headers[1].parent.contents)[0],
-                  filter(isPrice, headers[2].parent.contents)[0],
-                  filter(isPrice, headers[3].parent.contents)[0] ]
+  skinPrices = [  next(filter(isPrice, headers[1].parent.contents)),
+                  next(filter(isPrice, headers[2].parent.contents)),
+                  next(filter(isPrice, headers[3].parent.contents)) ]
   
-  champPrices = [ filter(isPrice, headers[5].parent.contents)[0],
-                  filter(isPrice, headers[6].parent.contents)[0],
-                  filter(isPrice, headers[7].parent.contents)[0] ]
+  champPrices = [ next(filter(isPrice, headers[5].parent.contents)),
+                  next(filter(isPrice, headers[6].parent.contents)),
+                  next(filter(isPrice, headers[7].parent.contents)) ]
 
   skins = []
   champs = []
@@ -101,9 +101,7 @@ def getNewSales():
   new_sales = set(scraped_sales).difference(set(db_sales))
 
   #filter out non regular sales (for now)
-  new_sales = filter(isNormalSale, new_sales) 
-
-  print new_sales
+  new_sales = filter(isNormalSale, new_sales)
 
   return_obj = []
 

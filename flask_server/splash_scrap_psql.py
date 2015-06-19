@@ -5,9 +5,6 @@ from bs4 import BeautifulSoup
 def addApos(string):
   return string.replace('\'', '\'\'')
 
-
-con = None
-
 con = psycopg2.connect(database='lolsalestracker', user='lolsalestracker_admin2', password='abc123')
 cur = con.cursor()
 
