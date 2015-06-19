@@ -6,9 +6,9 @@ db = SQLAlchemy()
 class Item(db.Model):
   __tablename__ = 'items'
   id = db.Column(db.Integer, primary_key=True)
-  type = db.Column(db.String)
+  key = db.Column(db.String)
+  champ = db.Column(db.String)
   name = db.Column(db.String)
-  display_name = db.Column(db.String)
   splash_url = db.Column(db.String)
 
   def to_json(self):
@@ -16,7 +16,7 @@ class Item(db.Model):
       "id": self.id,
       "type": self.type,
       "name": self.name,
-      "display_name": self.display_name
+      "display_name": self.display_name,
       "splash_url": self.splash_url
     }
 
